@@ -480,13 +480,6 @@ p { margin: 0; }
   main [style*="place-items:center"],
   .contact-card__icon, .family__icon { margin-inline: auto; }
 
-  /* Listes icône + texte en grille : empilées et centrées */
-  main [style*="grid-template-columns:40px 1fr"],
-  main [style*="grid-template-columns:44px 1fr"] {
-    grid-template-columns: 1fr !important;
-    justify-items: center;
-    text-align: center;
-  }
   main dl[style*="grid-template-columns:auto 1fr"] { grid-template-columns: 1fr !important; justify-items: center; }
   main dl dt { margin-top: 0.5rem; }
 
@@ -514,10 +507,6 @@ p { margin: 0; }
 
   /* Formulaire : cartes centrées, saisie alignée à gauche */
   .family { align-items: center; text-align: center; }
-  .choice { justify-content: center; text-align: center; padding-right: 2.75rem; padding-left: 2.75rem; }
-  .choice__label { text-align: center; }
-  .choice__icon { position: absolute; left: 0.75rem; }
-  .choice__check { position: absolute; right: 0.85rem; margin-left: 0; }
   .field-label, legend { text-align: center; width: 100%; }
   .field-error, .field-hint { text-align: center; }
   main input:not([type="checkbox"]):not([type="radio"]), main textarea, main select { text-align: left; }
@@ -528,4 +517,15 @@ p { margin: 0; }
   .f-grid ul { justify-content: center; align-items: center; }
   footer address { justify-content: center; text-align: center; }
   .f-contact { justify-content: center; }
+
+  /* Exception : les listes (icône + texte) restent alignées à gauche,
+     sinon l'icône et le texte se retrouvent écartés */
+  main ul[style*="flex-direction:column"],
+  main ol[style*="flex-direction:column"] { align-items: stretch !important; text-align: left; }
+  main li[style*="display:flex"],
+  main li > a[style*="display:flex"] { justify-content: flex-start !important; text-align: left; }
+  main li[style*="grid-template-columns:40px 1fr"],
+  main li[style*="grid-template-columns:44px 1fr"] { text-align: left; }
+  main li [style*="place-items:center"] { margin-inline: 0; }
+  .choice, .choice__label { justify-content: flex-start; text-align: left; }
 }
