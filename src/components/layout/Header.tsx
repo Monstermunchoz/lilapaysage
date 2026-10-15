@@ -6,7 +6,10 @@ import { usePathname } from 'next/navigation'
 import { identity } from '@/data/identity'
 import { serviceCards, familyLabels } from '@/data/services'
 import { Logo } from '@/components/ui/Logo'
-import { IconPhone, IconArrow } from '@/components/ui/Icons'
+import { IconPhone, IconArrow, IconSprout, IconMower, IconBricks } from '@/components/ui/Icons'
+
+const familyTitles = { creation: 'Création de jardin', entretien: 'Entretien et taille', maconnerie: 'Maçonnerie et aménagements' } as const
+const familyIcons = { creation: <IconSprout size={18} />, entretien: <IconMower size={18} />, maconnerie: <IconBricks size={18} /> }
 
 const navLinks = [
   { label: 'Prestations', href: '/services/', mega: true },
@@ -72,6 +75,7 @@ export function Header() {
   const isActive = (href: string) => pathname === href || (href !== '/' && pathname.startsWith(href))
 
   return (
+    <>
     <header
       style={{
         position: 'sticky', top: 0, zIndex: 50,
@@ -155,37 +159,6 @@ export function Header() {
         </div>
       </div>
 
-      {menuOpen && (
-        <div id="mobile-menu" ref={menuRef} role="dialog" aria-modal="true" aria-label="Menu de navigation" className="drawer">
-          <nav aria-label="Navigation mobile">
-            <ul style={{ listStyle: 'none', margin: 0, padding: 0 }}>
-              {navLinks.map((link) => (
-                <li key={link.href}>
-                  <Link href={link.href} onClick={() => setMenuOpen(false)} className="drawer__link">
-                    {link.label}
-                  </Link>
-                  {link.mega && (
-                    <ul style={{ listStyle: 'none', margin: '0.25rem 0 0.75rem', padding: 0, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.25rem 1rem' }}>
-                      {serviceCards.map((s) => (
-                        <li key={s.id}>
-                          <Link href={`/services/${s.slug}/`} onClick={() => setMenuOpen(false)} className="drawer__sub">
-                            {s.title}
-                          </Link>
-                        </li>
-                      ))}
-                    </ul>
-                  )}
-                </li>
-              ))}
-            </ul>
-            <div style={{ marginTop: '1.5rem', display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-              <Link href="/devis/" className="btn btn--accent btn--lg" onClick={() => setMenuOpen(false)}>Demander un devis</Link>
-              <a href={identity.phoneLink} className="btn btn--ghost btn--lg"><IconPhone size={18} /> {identity.phone}</a>
-            </div>
-          </nav>
-        </div>
-      )}
-
       <style>{`
         .desktop-nav { display: none; }
         .nav-item {
@@ -209,9 +182,20 @@ export function Header() {
         .header-cta { display: none !important; }
         .burger-btn { display: flex; flex-direction: column; justify-content: center; gap: 4px; width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--line); background: var(--white); cursor: pointer; padding: 0 11px; }
         .burger-btn span { display: block; height: 2px; width: 20px; border-radius: 2px; background: var(--green-900); transition: transform 0.2s, opacity 0.2s; }
-        .drawer { position: fixed; inset: 4.75rem 0 0 0; background: var(--paper); z-index: 49; overflow-y: auto; padding: 1.25rem var(--side-padding) 7rem; }
-        .drawer__link { display: block; padding: 0.9rem 0; border-bottom: 1px solid var(--line); font-family: var(--font-display); font-weight: 600; font-size: 1.5rem; color: var(--green-900); text-decoration: none; }
-        .drawer__sub { display: block; padding: 0.4rem 0; font-size: 0.9rem; color: var(--ink-soft); text-decoration: none; }
+        .drawer { position: fixed; inset: 0; z-index: 200; background: var(--paper); overflow-y: auto; -webkit-overflow-scrolling: touch; text-align: left; }
+        .drawer__top { position: sticky; top: 0; z-index: 1; display: flex; align-items: center; justify-content: space-between; height: 4.25rem; padding: 0 var(--side-padding); background: var(--paper); border-bottom: 1px solid var(--line); }
+        .drawer__close { width: 44px; height: 44px; border-radius: 50%; border: none; background: var(--green-900); color: #fff; display: grid; place-items: center; cursor: pointer; }
+        .drawer__body { padding: 1.25rem var(--side-padding) 2.5rem; }
+        .drawer__label { font-size: 0.8rem; font-weight: 700; color: var(--green-500); margin: 0 0 0.75rem; }
+        .drawer__families { display: grid; gap: 0.75rem; }
+        .drawer__family { background: var(--white); border-radius: var(--radius-md); padding: 0.9rem 1rem 0.5rem; box-shadow: var(--shadow-soft); }
+        .drawer__family-title { display: flex; align-items: center; gap: 0.6rem; margin: 0 0 0.35rem; font-family: var(--font-display); font-weight: 600; font-size: 1.2rem; color: var(--green-900); }
+        .drawer__family-icon { width: 34px; height: 34px; border-radius: 10px; background: var(--accent-100); display: grid; place-items: center; color: var(--green-900); flex: none; }
+        .drawer__family ul, .drawer__links { list-style: none; margin: 0; padding: 0; }
+        .drawer__service { display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; min-height: 44px; padding: 0.45rem 0; border-top: 1px solid var(--line); font-size: 0.975rem; font-weight: 500; color: var(--ink); text-decoration: none; }
+        .drawer__service svg { color: var(--green-500); flex: none; }
+        .drawer__link { display: flex; align-items: center; justify-content: space-between; min-height: 52px; padding: 0.5rem 0; border-bottom: 1px solid var(--line); font-family: var(--font-display); font-weight: 600; font-size: 1.3rem; color: var(--green-900); text-decoration: none; }
+        .drawer__cta { margin-top: 1.75rem; display: flex; flex-direction: column; gap: 0.75rem; }
         @media (min-width: 1000px) {
           .desktop-nav { display: block; }
           .header-cta { display: inline-flex !important; }
@@ -219,5 +203,60 @@ export function Header() {
         }
       `}</style>
     </header>
+
+    {menuOpen && (
+      <div id="mobile-menu" ref={menuRef} role="dialog" aria-modal="true" aria-label="Menu de navigation" className="drawer">
+        <div className="drawer__top">
+          <Link href="/" onClick={() => setMenuOpen(false)} aria-label={`${identity.brandName} — retour à l'accueil`} style={{ textDecoration: 'none' }}>
+            <Logo size="sm" />
+          </Link>
+          <button type="button" className="drawer__close" onClick={() => { setMenuOpen(false); triggerRef.current?.focus() }} aria-label="Fermer le menu">
+            <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" /></svg>
+          </button>
+        </div>
+
+        <nav aria-label="Navigation mobile" className="drawer__body">
+          <p className="drawer__label">Nos prestations</p>
+          <div className="drawer__families">
+            {families.map((f) => (
+              <div key={f.id} className="drawer__family">
+                <p className="drawer__family-title">
+                  <span className="drawer__family-icon" aria-hidden="true">{familyIcons[f.id]}</span>
+                  {familyTitles[f.id]}
+                </p>
+                <ul>
+                  {f.items.map((s) => (
+                    <li key={s.id}>
+                      <Link href={`/services/${s.slug}/`} onClick={() => setMenuOpen(false)} className="drawer__service">
+                        {s.title}
+                        <IconArrow size={14} />
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+
+          <p className="drawer__label" style={{ marginTop: '1.75rem' }}>Découvrir</p>
+          <ul className="drawer__links">
+            {navLinks.filter((l) => !l.mega).map((link) => (
+              <li key={link.href}>
+                <Link href={link.href} onClick={() => setMenuOpen(false)} className="drawer__link">
+                  {link.label}
+                  <IconArrow size={16} />
+                </Link>
+              </li>
+            ))}
+          </ul>
+
+          <div className="drawer__cta">
+            <Link href="/devis/" className="btn btn--accent btn--lg" onClick={() => setMenuOpen(false)}>Demander un devis</Link>
+            <a href={identity.phoneLink} className="btn btn--ghost btn--lg"><IconPhone size={18} /> {identity.phone}</a>
+          </div>
+        </nav>
+      </div>
+    )}
+    </>
   )
 }

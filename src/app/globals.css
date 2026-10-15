@@ -515,13 +515,21 @@ p { margin: 0; }
   /* Pied de page */
   .f-grid { justify-items: center; text-align: center; }
   .f-grid ul { justify-content: center; align-items: center; }
-  footer address { justify-content: center; text-align: center; }
-  .f-contact { justify-content: center; }
+  /* Coordonnées : bloc centré, lignes alignées à gauche (icônes en colonne) */
+  footer .f-grid > div:first-child > div[style*="flex-direction:column"] {
+    width: fit-content; max-width: 100%; margin-inline: auto;
+    align-items: flex-start !important; text-align: left;
+  }
+  footer address { justify-content: flex-start !important; text-align: left; }
+  .f-contact { justify-content: flex-start !important; }
 
   /* Exception : les listes (icône + texte) restent alignées à gauche,
      sinon l'icône et le texte se retrouvent écartés */
   main ul[style*="flex-direction:column"],
-  main ol[style*="flex-direction:column"] { align-items: stretch !important; text-align: left; }
+  main ol[style*="flex-direction:column"] {
+    width: fit-content; max-width: 100%; margin-inline: auto;
+    align-items: flex-start !important; text-align: left;
+  }
   main li[style*="display:flex"],
   main li > a[style*="display:flex"] { justify-content: flex-start !important; text-align: left; }
   main li[style*="grid-template-columns:40px 1fr"],
