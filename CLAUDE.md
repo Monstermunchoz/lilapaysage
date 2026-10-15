@@ -9,7 +9,7 @@ Site vitrine de **Lila Paysage** (paysagiste, Chessy-les-Mines, 69380). Next.js 
 - **Services à la personne** : agrément non vérifié → formulation conditionnelle uniquement (« peut ouvrir droit… sous réserve d'agrément »).
 - **Logo** : `src/components/ui/Logo.tsx` (SVG redessiné d'après Instagram, sans numéro de téléphone). Ne pas afficher le numéro de téléphone dans le logo ni dans l'en-tête.
 - **Photos** : `public/images/instagram/` (compte public @lila.paysage, 640 px). Les avant/après sont provisoires. Pas de banque d'images.
-- **Design** : tokens dans `globals.css` (`--green-900` olive, `--accent-500` vert tilleul, `--paper`). Composants : `.btn btn--accent|--green|--ghost|--on-dark`, `.panel`, `.tile`, `.choice`, `.family`, `.display`. Pas de centrage global forcé.
+- **Design** : tokens dans `globals.css` (`--green-900` olive, `--accent-500` vert tilleul, `--paper`). Composants : `.btn btn--accent|--green|--ghost|--on-dark`, `.panel`, `.tile`, `.choice`, `.family`, `.display`. Sur mobile (< 768 px), tout est centré (bloc dédié en fin de `globals.css`, basé sur les attributs `style` inline) : garder ce comportement.
 - **Formulaire** : un seul composant `QuoteForm` (3 étapes), schéma `QuoteFormData` dans `src/lib/types.ts`, validation serveur dans `src/lib/validation.ts`, liste blanche des types dans `src/data/config.ts`. Mode démo par défaut, jamais de faux succès.
 - **Aucun tiers** : pas de tracker, police distante, carte embarquée. Accessibilité WCAG 2.2 AA visée.
 

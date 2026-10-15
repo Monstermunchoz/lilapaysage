@@ -40,7 +40,7 @@ export default function ServicesPage() {
             </div>
             <div className="grid-3" style={{ gap: '0.9rem' }}>
               {f.items.map((s) => (
-                <Link key={s.id} href={`/services/${s.slug}/`} className="tile" style={{ aspectRatio: '4/3', minHeight: 240 }}>
+                <Link key={s.id} href={`/services/${s.slug}/`} className="tile" style={{ aspectRatio: '4/3' }}>
                   <Image src={s.image} alt="" fill sizes="(max-width: 700px) 100vw, 33vw" style={{ objectFit: 'cover' }} />
                   <span className="tile__shade" aria-hidden="true" />
                   <span className="tile__body">

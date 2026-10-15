@@ -52,7 +52,7 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
       </PageHeader>
 
       <div className="container">
-        <div style={{ position: 'relative', borderRadius: 'var(--radius-xl)', overflow: 'hidden', aspectRatio: '16 / 7', minHeight: 280, background: 'var(--green-100)' }}>
+        <div style={{ position: 'relative', borderRadius: 'var(--radius-xl)', overflow: 'hidden', height: 'clamp(240px, 42vw, 540px)', background: 'var(--green-100)' }}>
           <Image src={service.coverImage} alt={service.coverImageAlt} fill sizes="(max-width: 1240px) 100vw, 1240px" style={{ objectFit: 'cover' }} priority />
         </div>
       </div>

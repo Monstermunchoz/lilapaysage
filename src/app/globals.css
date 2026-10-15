@@ -456,3 +456,76 @@ p { margin: 0; }
   .steps__label { display: none; }
   .steps__dot.is-active + .steps__label { display: inline; }
 }
+
+/* ────────────────────────────────────────────────────
+   Mobile (< 768 px) : tout est centré
+   Les styles de mise en page étant écrits en inline dans les composants,
+   on cible les attributs `style` sérialisés par React (ex. "display:flex").
+   ──────────────────────────────────────────────────── */
+@media (max-width: 767px) {
+  main, footer { text-align: center; }
+
+  /* Rangées et colonnes flex : contenu centré */
+  main [style*="display:flex"],
+  footer [style*="display:flex"] { justify-content: center !important; align-items: center !important; }
+  main [style*="align-self:flex-start"],
+  footer [style*="align-self:flex-start"] { align-self: center !important; }
+
+  /* Blocs à largeur limitée : centrés au lieu de rester à gauche */
+  main [style*="max-width"],
+  footer [style*="max-width"] { margin-inline: auto; }
+  .lead { margin-inline: auto; }
+
+  /* Pastilles d'icône (carrés arrondis) centrées */
+  main [style*="place-items:center"],
+  .contact-card__icon, .family__icon { margin-inline: auto; }
+
+  /* Listes icône + texte en grille : empilées et centrées */
+  main [style*="grid-template-columns:40px 1fr"],
+  main [style*="grid-template-columns:44px 1fr"] {
+    grid-template-columns: 1fr !important;
+    justify-items: center;
+    text-align: center;
+  }
+  main dl[style*="grid-template-columns:auto 1fr"] { grid-template-columns: 1fr !important; justify-items: center; }
+  main dl dt { margin-top: 0.5rem; }
+
+  /* Listes à puces */
+  main ul:not([style*="list-style:none"]), .alert ul { padding-left: 0; list-style-position: inside; }
+
+  /* Fil d'Ariane, kicker, liens */
+  .breadcrumb { justify-content: center; }
+  .kicker { justify-content: center; }
+
+  /* Tuiles photo : texte centré */
+  .tile__body { align-items: center; text-align: center; }
+  .tile__desc { margin-inline: auto; }
+  .tile__tag { left: 50%; transform: translateX(-50%); }
+
+  /* Encadrés */
+  .panel, .contact-card { text-align: center; align-items: center; }
+
+  /* Hero : carte flottante centrée */
+  .hero-collage__card { left: 0.75rem !important; right: 0.75rem; max-width: none !important; justify-content: center; }
+
+  /* FAQ */
+  .faq summary { justify-content: center; text-align: center; }
+  .faq p { margin-inline: auto; }
+
+  /* Formulaire : cartes centrées, saisie alignée à gauche */
+  .family { align-items: center; text-align: center; }
+  .choice { justify-content: center; text-align: center; padding-right: 2.75rem; padding-left: 2.75rem; }
+  .choice__label { text-align: center; }
+  .choice__icon { position: absolute; left: 0.75rem; }
+  .choice__check { position: absolute; right: 0.85rem; margin-left: 0; }
+  .field-label, legend { text-align: center; width: 100%; }
+  .field-error, .field-hint { text-align: center; }
+  main input:not([type="checkbox"]):not([type="radio"]), main textarea, main select { text-align: left; }
+  .steps { justify-content: center; }
+
+  /* Pied de page */
+  .f-grid { justify-items: center; text-align: center; }
+  .f-grid ul { justify-content: center; align-items: center; }
+  footer address { justify-content: center; text-align: center; }
+  .f-contact { justify-content: center; }
+}
