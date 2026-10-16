@@ -127,7 +127,7 @@ p { margin: 0; }
   font-family: var(--font-display);
   font-weight: 600;
   line-height: 1.08;
-  letter-spacing: -0.025em;
+  letter-spacing: -0.01em;
   color: var(--green-900);
 }
 .display--xl { font-size: clamp(2.75rem, 7vw, 5.75rem); }
@@ -459,38 +459,47 @@ p { margin: 0; }
 
 /* ────────────────────────────────────────────────────
    Mobile (< 768 px) : tout est centré
-   Les styles de mise en page étant écrits en inline dans les composants,
-   on cible les attributs `style` sérialisés par React (ex. "display:flex").
+   Les styles de mise en page sont écrits en inline dans les composants.
+   Selon le rendu (serveur ou navigateur), l'attribut s'écrit « display:flex »
+   ou « display: flex » : chaque sélecteur couvre les deux formes.
    ──────────────────────────────────────────────────── */
 @media (max-width: 767px) {
   main, footer { text-align: center; }
 
   /* Rangées et colonnes flex : contenu centré */
-  main [style*="display:flex"],
-  footer [style*="display:flex"] { justify-content: center !important; align-items: center !important; }
-  main [style*="align-self:flex-start"],
-  footer [style*="align-self:flex-start"] { align-self: center !important; }
+  main [style*="display:flex"], main [style*="display: flex"],
+  footer [style*="display:flex"], footer [style*="display: flex"] {
+    justify-content: center !important;
+    align-items: center !important;
+  }
+  main [style*="align-self:flex-start"], main [style*="align-self: flex-start"],
+  footer [style*="align-self:flex-start"], footer [style*="align-self: flex-start"] {
+    align-self: center !important;
+  }
 
-  /* Blocs à largeur limitée : centrés au lieu de rester à gauche */
-  main [style*="max-width"],
-  footer [style*="max-width"] { margin-inline: auto; }
+  /* Boutons et liens d'action : toujours centrés, quelle que soit leur rangée */
+  main .btn, footer .btn, main .link { align-self: center; }
+
+  /* Blocs à largeur limitée : centrés */
+  main [style*="max-width"], footer [style*="max-width"] { margin-inline: auto; }
   .lead { margin-inline: auto; }
 
-  /* Pastilles d'icône (carrés arrondis) centrées */
-  main [style*="place-items:center"],
+  /* Pastilles d'icône centrées */
+  main [style*="place-items:center"], main [style*="place-items: center"],
   .contact-card__icon, .family__icon { margin-inline: auto; }
 
-  main dl[style*="grid-template-columns:auto 1fr"] { grid-template-columns: 1fr !important; justify-items: center; }
+  main dl[style*="grid-template-columns:auto 1fr"],
+  main dl[style*="grid-template-columns: auto 1fr"] { grid-template-columns: 1fr !important; justify-items: center; }
   main dl dt { margin-top: 0.5rem; }
 
   /* Listes à puces */
-  main ul:not([style*="list-style:none"]), .alert ul { padding-left: 0; list-style-position: inside; }
+  main ul:not([style*="list-style:none"]):not([style*="list-style: none"]), .alert ul { padding-left: 0; list-style-position: inside; }
 
-  /* Fil d'Ariane, kicker, liens */
+  /* Fil d'Ariane, kicker */
   .breadcrumb { justify-content: center; }
   .kicker { justify-content: center; }
 
-  /* Tuiles photo : texte centré */
+  /* Tuiles photo */
   .tile__body { align-items: center; text-align: center; }
   .tile__desc { margin-inline: auto; }
   .tile__tag { left: 50%; transform: translateX(-50%); }
@@ -498,45 +507,57 @@ p { margin: 0; }
   /* Encadrés */
   .panel, .contact-card { text-align: center; align-items: center; }
 
-  /* Hero : carte flottante centrée */
+  /* Hero : carte flottante */
   .hero-collage__card { left: 0.75rem !important; right: 0.75rem; max-width: none !important; justify-content: center; }
 
   /* FAQ */
   .faq summary { justify-content: center; text-align: center; }
   .faq p { margin-inline: auto; }
 
-  /* Formulaire : cartes centrées, saisie alignée à gauche */
+  /* Formulaire */
   .family { align-items: center; text-align: center; }
   .field-label, legend { text-align: center; width: 100%; }
   .field-error, .field-hint { text-align: center; }
   main input:not([type="checkbox"]):not([type="radio"]), main textarea, main select { text-align: left; }
   .steps { justify-content: center; }
+  .choice, .choice__label { justify-content: flex-start; text-align: left; }
 
   /* Pied de page */
   .f-grid { justify-items: center; text-align: center; }
   .f-grid ul { justify-content: center; align-items: center; }
   /* Coordonnées : bloc centré, lignes alignées à gauche (icônes en colonne) */
-  footer .f-grid > div:first-child > div[style*="flex-direction:column"] {
+  footer .f-grid > div:first-child > div[style*="flex-direction:column"],
+  footer .f-grid > div:first-child > div[style*="flex-direction: column"] {
     width: fit-content; max-width: 100%; margin-inline: auto;
     align-items: flex-start !important; text-align: left;
   }
   footer address { justify-content: flex-start !important; text-align: left; }
   .f-contact { justify-content: flex-start !important; }
 
-  /* Exception : les listes (icône + texte) restent alignées à gauche,
-     sinon l'icône et le texte se retrouvent écartés */
-  main ul[style*="flex-direction:column"],
-  main ol[style*="flex-direction:column"] {
+  /* Listes à icônes : bloc centré, lignes alignées à gauche (icônes en colonne) */
+  main ul[style*="flex-direction:column"]:has(svg, img, [style*="place-items"]),
+  main ul[style*="flex-direction: column"]:has(svg, img, [style*="place-items"]),
+  main ol[style*="flex-direction:column"]:has(svg, img, [style*="place-items"]),
+  main ol[style*="flex-direction: column"]:has(svg, img, [style*="place-items"]) {
     width: fit-content; max-width: 100%; margin-inline: auto;
     align-items: flex-start !important; text-align: left;
   }
-  main li[style*="display:flex"],
-  main li > a[style*="display:flex"] { justify-content: flex-start !important; text-align: left; }
-  main li[style*="grid-template-columns:40px 1fr"],
-  main li[style*="grid-template-columns:44px 1fr"] { text-align: left; }
-  main li [style*="place-items:center"] { margin-inline: 0; }
-  .choice, .choice__label { justify-content: flex-start; text-align: left; }
+  main li[style*="display:flex"]:has(svg, img, [style*="place-items"]),
+  main li[style*="display: flex"]:has(svg, img, [style*="place-items"]),
+  main li > a[style*="display:flex"]:has(svg, img, [style*="place-items"]),
+  main li > a[style*="display: flex"]:has(svg, img, [style*="place-items"]) {
+    justify-content: flex-start !important; text-align: left;
+  }
+  main li[style*="grid-template-columns:40px 1fr"], main li[style*="grid-template-columns: 40px 1fr"],
+  main li[style*="grid-template-columns:44px 1fr"], main li[style*="grid-template-columns: 44px 1fr"] { text-align: left; }
+  main li [style*="place-items:center"], main li [style*="place-items: center"] { margin-inline: 0; }
+  main li .btn, main li .link { align-self: auto; }
 
-  /* Images de cartes : garder toute la largeur dans les blocs centrés */
+  /* Images de cartes : pleine largeur dans les blocs centrés */
   .home-post__img, .post-card__img, .more-card__img, .featured__img { width: 100%; display: block; }
+
+  /* Hero : titre plus présent (élément LCP), photos un peu plus bas */
+  .display--xl { font-size: clamp(2.3rem, 11.4vw, 3.1rem); }
+  .display { overflow-wrap: break-word; hyphens: auto; }
+  main .hero-rise { margin-bottom: 3.25rem !important; }
 }

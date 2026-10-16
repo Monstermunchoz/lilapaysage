@@ -15,7 +15,7 @@ const manrope = localFont({
   variable: '--font-manrope',
 })
 
-// Fraunces figée en taille optique « titre » (opsz 72) : jambages (j, g, p) pleins, graisses 500–600, sous-ensemble latin
+// Fraunces figée en taille optique 28 (traits nets, jambages complets) : jambages (j, g, p) pleins, graisses 500–600, sous-ensemble latin
 const fraunces = localFont({
   src: [{ path: '../fonts/fraunces-display-normal.woff2', weight: '500 600', style: 'normal' }],
   display: 'swap',
