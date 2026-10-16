@@ -6,9 +6,15 @@ import type { SiteConfig, ProjectType, NeedFamily } from '@/lib/types'
  * En l'absence de configuration, le site reste en mode démo
  * et aucun message ne part vers l'entreprise.
  */
+const vercelUrl = process.env.VERCEL_PROJECT_PRODUCTION_URL
+  ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+  : undefined
+
 export const siteConfig: SiteConfig = {
   demoMode: process.env.DEMO_MODE !== 'false',
-  siteUrl: process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000',
+  siteUrl: process.env.NEXT_PUBLIC_SITE_URL ?? vercelUrl ?? 'http://localhost:3000',
+  // Indexation autorisée par défaut ; NEXT_PUBLIC_NOINDEX=true pour masquer le site aux moteurs
+  indexable: process.env.NEXT_PUBLIC_NOINDEX !== 'true',
   recipientEmail: process.env.RECIPIENT_EMAIL ?? '',
   fromEmail: process.env.FROM_EMAIL ?? '',
 }

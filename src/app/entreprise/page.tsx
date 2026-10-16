@@ -8,6 +8,7 @@ import { IconArrow, IconHome, IconSprout, IconBricks, IconShield } from '@/compo
 export const metadata: Metadata = {
   title: 'L\'entreprise — Jérôme Diasparra, paysagiste à Chessy-les-Mines',
   description: 'Lila Paysage, entreprise de paysage fondée en 2011 à Chessy-les-Mines (Rhône). Création, entretien et maçonnerie paysagère dans le Beaujolais et l\'Ouest lyonnais.',
+  alternates: { canonical: '/entreprise/' },
 }
 
 export default function EntreprisePage() {

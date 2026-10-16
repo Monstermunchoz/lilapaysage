@@ -8,6 +8,7 @@ import { IconArrow } from '@/components/ui/Icons'
 export const metadata: Metadata = {
   title: 'Avant / après',
   description: 'Transformations de jardins avant et après : pelouses, terrasses, dallages, escaliers et plantations.',
+  alternates: { canonical: '/avant-apres/' },
 }
 
 export default function AvantApresPage() {

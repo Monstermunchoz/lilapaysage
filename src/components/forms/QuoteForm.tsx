@@ -212,7 +212,7 @@ export function QuoteForm({ presetType, embedded = false }: Props) {
             <div key={label} style={{ display: 'contents' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                 <span className={`steps__dot ${state}`} aria-hidden="true">{step > n ? <IconCheck size={14} /> : n}</span>
-                <span className="steps__label" style={{ opacity: step === n ? 1 : 0.55 }}>{label}</span>
+                <span className="steps__label" style={{ color: step === n ? 'var(--green-900)' : 'var(--ink-soft)' }}>{label}</span>
               </div>
               {n < 3 && <span className="steps__line" style={{ ['--p' as string]: step > n ? 1 : 0 }} aria-hidden="true" />}
             </div>

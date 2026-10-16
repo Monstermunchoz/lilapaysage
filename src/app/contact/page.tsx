@@ -8,6 +8,7 @@ import { IconPhone, IconMail, IconPin, IconArrow } from '@/components/ui/Icons'
 export const metadata: Metadata = {
   title: 'Contact',
   description: 'Contactez Lila Paysage, paysagiste à Chessy-les-Mines (69380). Téléphone, e-mail et demande de rappel.',
+  alternates: { canonical: '/contact/' },
 }
 
 export default function ContactPage() {

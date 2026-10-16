@@ -25,6 +25,18 @@ Next.js 16 (App Router), React 19, TypeScript strict, Tailwind 4 (tokens dans `s
 - `src/components/` — `layout/` (Header avec méga-menu, Footer, MobileBar), `forms/` (QuoteForm en 3 étapes, CallbackForm, CaptchaField), `ui/` (Logo, Icons, PageHeader, BeforeAfterSlider, PortfolioGrid, Lightbox)
 - `public/images/instagram/` — photos du compte Instagram public @lila.paysage (640 px)
 
+## Rubrique « Conseils & actus » (blog)
+
+- 16 guides SEO dans `src/data/articles/<slug>.ts` (type dans `src/lib/article-types.ts`), listés dans `src/data/articles/index.ts`.
+- Pages : `/conseils/` (liste par thème) et `/conseils/<slug>/` (sommaire, FAQ, maillage interne, JSON-LD BlogPosting + FAQPage + BreadcrumbList).
+- Texte enrichi : `**gras**` et `[ancre](/lien/)`. Brief de rédaction et règles SEO : `docs/brief-redaction-blog.md`.
+- Pour ajouter un article : créer le fichier, l'importer dans `index.ts`, il apparaît automatiquement dans la liste, le sitemap et l'accueil (3 premiers).
+
+## Indexation et URL canonique
+
+- Indexation autorisée par défaut (balises robots + `robots.txt` + `sitemap.xml`). Pour masquer le site : `NEXT_PUBLIC_NOINDEX=true`.
+- URL du site : `NEXT_PUBLIC_SITE_URL` (sinon URL de production Vercel). À définir sur le vrai domaine au lancement.
+
 ## Formulaire de devis
 
 Trois étapes : **famille de besoin** (créer / entretenir / construire) → **prestations** (choix multiples avec icônes, rythme d'entretien si entretien, commune, surface, échéance) → **coordonnées** (téléphone ou e-mail). Préremplissage par `?type=` limité à la liste blanche de `src/data/config.ts`.
@@ -45,4 +57,5 @@ Trois étapes : **famille de besoin** (créer / entretenir / construire) → **p
 - Agrément « services à la personne » : non vérifié, formulation conditionnelle uniquement.
 - Photos : demander les originaux HD des 9 photos Instagram ; les **avant/après sont des visuels provisoires** issus d'un autre projet et doivent être remplacés.
 - Nom de domaine (`lila-paysage.fr` supposé, non acheté), hébergeur, responsable de publication, médiation.
-- Retirer le `noindex` dans `src/app/layout.tsx` à la mise en production.
+- Définir `NEXT_PUBLIC_SITE_URL` avec le domaine définitif (canonical, sitemap, données structurées).
+- Logo « Services à la personne » affiché sur l'accueil à la demande de l'agence : à retirer si l'entreprise n'est pas déclarée SAP.

@@ -5,6 +5,7 @@ import { identity } from '@/data/identity'
 export const metadata: Metadata = {
   title: 'Politique de confidentialité',
   description: 'Politique de confidentialité du site lila-paysage.fr',
+  alternates: { canonical: '/confidentialite/' },
 }
 
 export default function ConfidentialitePage() {
@@ -57,7 +58,7 @@ export default function ConfidentialitePage() {
               Destinataires
             </h2>
             <p>
-              Les données sont transmises uniquement à {identity.legalName}
+              Les données sont transmises uniquement à {identity.legalName}{' '}
               pour le traitement de votre demande.
               Elles ne sont pas revendues ni transmises à des tiers.
             </p>

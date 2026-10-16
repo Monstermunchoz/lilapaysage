@@ -1,4 +1,4 @@
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import localFont from 'next/font/local'
 import './globals.css'
 import { Header } from '@/components/layout/Header'
@@ -15,13 +15,19 @@ const manrope = localFont({
   variable: '--font-manrope',
 })
 
+// Fraunces figée en taille optique « titre » (opsz 72) : jambages (j, g, p) pleins, graisses 500–600, sous-ensemble latin
 const fraunces = localFont({
-  src: [
-    { path: '../fonts/fraunces-latin-wght-normal.woff2', weight: '100 900', style: 'normal' },
-    { path: '../fonts/fraunces-latin-wght-italic.woff2', weight: '100 900', style: 'italic' },
-  ],
+  src: [{ path: '../fonts/fraunces-display-normal.woff2', weight: '500 600', style: 'normal' }],
   display: 'swap',
   variable: '--font-fraunces',
+})
+
+// Italique : quelques mots seulement → pas de préchargement (n'entre pas en concurrence avec l'image principale)
+const frauncesItalic = localFont({
+  src: [{ path: '../fonts/fraunces-display-italic.woff2', weight: '500 600', style: 'italic' }],
+  display: 'swap',
+  preload: false,
+  variable: '--font-fraunces-italic',
 })
 
 export const metadata: Metadata = {
@@ -31,10 +37,9 @@ export const metadata: Metadata = {
     template: `%s | ${identity.brandName}`,
   },
   description: 'Création, entretien et maçonnerie paysagère à Chessy-les-Mines, dans le Beaujolais, la vallée d\'Azergues et l\'Ouest lyonnais.',
-  robots: {
-    index: false,   // noindex en démo – retirer en production
-    follow: false,
-  },
+  robots: siteConfig.indexable
+    ? { index: true, follow: true, googleBot: { index: true, follow: true, 'max-image-preview': 'large', 'max-snippet': -1 } }
+    : { index: false, follow: false },
   openGraph: {
     type: 'website',
     locale: 'fr_FR',
@@ -43,6 +48,13 @@ export const metadata: Metadata = {
   icons: {
     icon: '/favicon.ico',
   },
+  formatDetection: { telephone: false },
+}
+
+export const viewport: Viewport = {
+  themeColor: '#2A3412',
+  width: 'device-width',
+  initialScale: 1,
 }
 
 export default function RootLayout({
@@ -51,7 +63,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="fr" className={`${manrope.variable} ${fraunces.variable}`}>
+    <html lang="fr" className={`${manrope.variable} ${fraunces.variable} ${frauncesItalic.variable}`}>
       <body>
         <a href="#main-content" className="skip-link">
           Aller au contenu principal

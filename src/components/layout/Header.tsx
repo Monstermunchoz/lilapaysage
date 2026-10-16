@@ -14,6 +14,7 @@ const familyIcons = { creation: <IconSprout size={18} />, entretien: <IconMower 
 const navLinks = [
   { label: 'Prestations', href: '/services/', mega: true },
   { label: 'Réalisations', href: '/realisations/' },
+  { label: 'Conseils', href: '/conseils/' },
   { label: 'Avant / après', href: '/avant-apres/' },
   { label: 'L\'entreprise', href: '/entreprise/' },
   { label: 'Contact', href: '/contact/' },

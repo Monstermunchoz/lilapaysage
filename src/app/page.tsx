@@ -5,12 +5,14 @@ import { identity, commitments } from '@/data/identity'
 import { serviceCards, familyLabels } from '@/data/services'
 import { portfolioItems } from '@/data/portfolio'
 import { beforeAfterPairs } from '@/data/before-after'
+import { articles } from '@/data/articles'
 import { BeforeAfterSlider } from '@/components/ui/BeforeAfterSlider'
 import { QuoteFormWrapper } from '@/components/forms/QuoteFormWrapper'
-import { IconArrow, IconPhone, IconShield, IconPin, IconSparkle } from '@/components/ui/Icons'
+import { IconArrow, IconPhone, IconShield, IconPin } from '@/components/ui/Icons'
 
 export const metadata: Metadata = {
-  title: `Paysagiste à Chessy-les-Mines, Beaujolais | ${identity.brandName}`,
+  title: { absolute: `Paysagiste à Chessy-les-Mines, Beaujolais | ${identity.brandName}` },
+  alternates: { canonical: '/' },
   description: 'Lila Paysage crée, entretient et aménage les jardins à Chessy-les-Mines, dans le Beaujolais, la vallée d\'Azergues et l\'Ouest lyonnais. Création, entretien, maçonnerie paysagère, clôtures.',
   openGraph: {
     title: `Paysagiste à Chessy-les-Mines, Beaujolais | ${identity.brandName}`,
@@ -90,15 +92,19 @@ export default function HomePage() {
           </div>
         </div>
 
-        <div className="hero-photo hero-collage" aria-hidden="true">
+        <div className="hero-collage" aria-hidden="true">
           {[
             ['/images/instagram/gazon-cloture.jpg', 'hero-collage__a'],
             ['/images/instagram/olivier.jpg', 'hero-collage__b'],
             ['/images/instagram/allee-pavee.jpg', 'hero-collage__c'],
             ['/images/instagram/massif-fleuri.jpg', 'hero-collage__d'],
-          ].map(([src, cls]) => (
+          ].map(([src, cls], i) => (
             <div key={src} className={cls} style={{ position: 'relative', overflow: 'hidden', borderRadius: 'var(--radius-lg)', background: 'var(--green-100)' }}>
-              <Image src={src} alt="" fill sizes="(max-width: 700px) 50vw, 33vw" style={{ objectFit: 'cover' }} priority />
+              {i === 0 ? (
+                <Image src={src} alt="" fill sizes="(max-width: 700px) 92vw, 50vw" quality={55} style={{ objectFit: 'cover' }} priority fetchPriority="high" />
+              ) : (
+                <Image src={src} alt="" fill sizes="(max-width: 700px) 46vw, 25vw" quality={65} style={{ objectFit: 'cover' }} loading={i === 3 ? 'lazy' : 'eager'} fetchPriority="low" />
+              )}
             </div>
           ))}
           <div className="hero-collage__card panel" style={{ padding: '1rem 1.1rem', display: 'flex', gap: '0.9rem', alignItems: 'center' }}>
@@ -239,12 +245,15 @@ export default function HomePage() {
         <div className="container">
           <div className="grid-2" style={{ gap: '1.25rem', alignItems: 'stretch' }}>
             <div className="panel panel--accent" style={{ padding: 'clamp(1.75rem, 4vw, 2.75rem)', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-              <span style={{ width: 48, height: 48, borderRadius: 14, background: 'var(--white)', color: 'var(--green-900)', display: 'grid', placeItems: 'center' }}><IconSparkle size={24} /></span>
+              <span style={{ display: 'grid', placeItems: 'center', width: 132, padding: '0.6rem', borderRadius: 16, background: 'var(--white)', boxShadow: 'var(--shadow-soft)' }}>
+                <Image src={commitments.servicesALaPersonne.logo} alt="Logo Services à la personne" width={244} height={206} sizes="120px" style={{ width: 112, height: 'auto' }} />
+              </span>
               <h2 id="maint-title" className="display display--md">L&apos;entretien, sans y penser.</h2>
               <p style={{ lineHeight: 1.65, color: 'var(--ink-soft)' }}>
                 Contrat à l&apos;année ou passage ponctuel : tonte, taille, désherbage, nettoyage de saison.
                 {' '}{commitments.servicesALaPersonne.text}
               </p>
+              <Link href="/conseils/credit-impot-entretien-jardin/" className="link" style={{ alignSelf: 'flex-start' }}>Le crédit d&apos;impôt expliqué <IconArrow size={16} /></Link>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.6rem', marginTop: 'auto' }}>
                 <Link href="/devis/?type=entretien-regulier" className="btn btn--green">Devis entretien</Link>
                 <Link href="/services/entretien-jardin/" className="btn btn--ghost" style={{ background: 'var(--white)' }}>En savoir plus</Link>
@@ -260,6 +269,30 @@ export default function HomePage() {
                 {identity.territories.map((t) => <li key={t} className="pill">{t}</li>)}
               </ul>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── CONSEILS ─────────────────────────────────────────── */}
+      <section aria-labelledby="blog-title" className="section" style={{ paddingTop: 0 }}>
+        <div className="container">
+          <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'flex-end', gap: '1rem', marginBottom: '1.5rem' }}>
+            <div>
+              <p className="kicker" style={{ marginBottom: '0.75rem' }}>Conseils &amp; actus</p>
+              <h2 id="blog-title" className="display display--lg">Les guides du jardinier.</h2>
+            </div>
+            <Link href="/conseils/" className="link">Tous les conseils <IconArrow size={16} /></Link>
+          </div>
+          <div className="home-posts">
+            {articles.slice(0, 3).map((a) => (
+              <Link key={a.slug} href={`/conseils/${a.slug}/`} className="panel home-post">
+                <span className="home-post__img"><Image src={a.cover.src} alt={a.cover.alt} fill sizes="(max-width: 700px) 100vw, 33vw" style={{ objectFit: 'cover' }} /></span>
+                <span className="home-post__body">
+                  <span className="small" style={{ color: 'var(--green-500)', fontWeight: 600 }}>{a.category}</span>
+                  <span className="home-post__title">{a.title}</span>
+                </span>
+              </Link>
+            ))}
           </div>
         </div>
       </section>
@@ -347,6 +380,13 @@ export default function HomePage() {
         .work-row > * { scroll-snap-align: start; }
         @media (min-width: 700px) { .work-row { grid-auto-flow: row; grid-template-columns: repeat(4, 1fr); overflow: visible; } }
 
+        .home-posts { display: grid; grid-template-columns: 1fr; gap: 1rem; }
+        @media (min-width: 760px) { .home-posts { grid-template-columns: repeat(3, 1fr); } }
+        .home-post { display: flex; flex-direction: column; overflow: hidden; text-decoration: none; color: inherit; transition: transform 0.2s, box-shadow 0.2s; }
+        .home-post:hover { transform: translateY(-3px); box-shadow: var(--shadow-lift); }
+        .home-post__img { position: relative; aspect-ratio: 16 / 10; background: var(--green-100); }
+        .home-post__body { display: flex; flex-direction: column; gap: 0.4rem; padding: 1.2rem; }
+        .home-post__title { font-family: var(--font-display); font-weight: 600; font-size: 1.15rem; line-height: 1.2; color: var(--green-900); }
         .faq { border-bottom: 1px solid var(--line); }
         .faq summary { list-style: none; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 1rem; padding: 1.1rem 0; font-weight: 600; color: var(--green-900); font-size: 1.05rem; }
         .faq summary::-webkit-details-marker { display: none; }

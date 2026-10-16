@@ -1,35 +1,29 @@
 import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
-  // Serve images from local public folder only – no external domains
+  // Toutes les URL internes se terminent par « / » : une seule forme canonique
+  trailingSlash: true,
+
   images: {
-    remotePatterns: [],
+    remotePatterns: [],                 // images locales uniquement
+    formats: ['image/avif', 'image/webp'],
+    qualities: [55, 65, 75],
+    deviceSizes: [360, 414, 640, 828, 1080, 1280, 1920],
+    imageSizes: [48, 96, 160, 256, 384],
+    minimumCacheTTL: 31536000,
   },
 
-  // Redirections préparées pour la migration depuis l'ancien site WordPress.
-  // À activer une fois que le domaine de production pointe vers ce site.
-  // Ne jamais rediriger vers l'accueil si une destination précise existe.
-  async redirects() {
+  // CSS inliné dans le <head> : supprime la requête bloquante (meilleur FCP/LCP)
+  experimental: { inlineCss: true },
+
+  compress: true,
+  poweredByHeader: false,
+
+  async headers() {
     return [
       {
-        source: '/services-amenagements-paysagers-maconnerie-exterieure/',
-        destination: '/services/',
-        permanent: true,
-      },
-      {
-        source: '/avant-apres-chantier-paysagiste/',
-        destination: '/avant-apres/',
-        permanent: true,
-      },
-      {
-        source: '/realisations-espaces-exterieurs/',
-        destination: '/realisations/',
-        permanent: true,
-      },
-      {
-        source: '/contactez-les-jardins-d-henri/',
-        destination: '/contact/',
-        permanent: true,
+        source: '/images/:path*',
+        headers: [{ key: 'Cache-Control', value: 'public, max-age=31536000, immutable' }],
       },
     ]
   },

@@ -31,6 +31,7 @@
 
   --font-body: var(--font-manrope), system-ui, sans-serif;
   --font-display: var(--font-fraunces), Georgia, serif;
+  --font-display-italic: var(--font-fraunces-italic), Georgia, serif;
 
   --section-gap: clamp(4rem, 8vw, 7rem);
   --container-max: 1240px;
@@ -125,7 +126,7 @@ p { margin: 0; }
 .display {
   font-family: var(--font-display);
   font-weight: 600;
-  line-height: 1.02;
+  line-height: 1.08;
   letter-spacing: -0.025em;
   color: var(--green-900);
 }
@@ -133,7 +134,7 @@ p { margin: 0; }
 .display--lg { font-size: clamp(2.25rem, 4.5vw, 3.75rem); }
 .display--md { font-size: clamp(1.75rem, 3vw, 2.5rem); line-height: 1.1; }
 .display--sm { font-size: clamp(1.25rem, 2vw, 1.5rem); line-height: 1.2; }
-.display em { font-style: italic; font-weight: 500; }
+.display em, h1 em, h2 em { font-family: var(--font-display-italic); font-style: italic; font-weight: 500; }
 
 .lead {
   font-size: clamp(1.0625rem, 1.4vw, 1.25rem);
@@ -406,7 +407,6 @@ p { margin: 0; }
 .hero-rise > *:nth-child(3) { animation-delay: 0.16s; }
 .hero-rise > *:nth-child(4) { animation-delay: 0.24s; }
 @keyframes reveal { from { clip-path: inset(0 0 100% 0 round var(--radius-xl)); } to { clip-path: inset(0 0 0 0 round var(--radius-xl)); } }
-.hero-photo { animation: reveal 1.1s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
 
 /* ────────────────────────────────────────────────────
    Avant / après
@@ -536,4 +536,7 @@ p { margin: 0; }
   main li[style*="grid-template-columns:44px 1fr"] { text-align: left; }
   main li [style*="place-items:center"] { margin-inline: 0; }
   .choice, .choice__label { justify-content: flex-start; text-align: left; }
+
+  /* Images de cartes : garder toute la largeur dans les blocs centrés */
+  .home-post__img, .post-card__img, .more-card__img, .featured__img { width: 100%; display: block; }
 }

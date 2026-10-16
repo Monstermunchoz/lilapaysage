@@ -69,6 +69,7 @@ export function Footer() {
             <p style={{ fontFamily: 'var(--font-display)', fontWeight: 600, fontSize: '1.1rem', color: '#fff', marginBottom: '0.9rem' }}>L&apos;entreprise</p>
             <ul style={{ listStyle: 'none', margin: 0, padding: 0, display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
               <li><Link href="/realisations/" className="f-link">Réalisations</Link></li>
+              <li><Link href="/conseils/" className="f-link">Conseils &amp; actus</Link></li>
               <li><Link href="/avant-apres/" className="f-link">Avant / après</Link></li>
               <li><Link href="/entreprise/" className="f-link">Qui sommes-nous</Link></li>
               <li><Link href="/contact/" className="f-link">Contact</Link></li>

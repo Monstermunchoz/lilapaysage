@@ -15,7 +15,12 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const { slug } = await params
   const service = servicePages.find((s) => s.slug === slug)
   if (!service) return {}
-  return { title: service.metaTitle, description: service.metaDescription }
+  return {
+    title: { absolute: service.metaTitle },
+    description: service.metaDescription,
+    alternates: { canonical: `/services/${service.slug}/` },
+    openGraph: { title: service.metaTitle, description: service.metaDescription, images: [{ url: service.coverImage }] },
+  }
 }
 
 export default async function ServicePage({ params }: { params: Promise<{ slug: string }> }) {

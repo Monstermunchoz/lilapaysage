@@ -8,6 +8,7 @@ import { IconArrow } from '@/components/ui/Icons'
 export const metadata: Metadata = {
   title: 'Prestations : création, entretien, maçonnerie paysagère',
   description: 'Création de jardin, entretien, élagage, terrasses, murets, clôtures, arrosage automatique. Les prestations de Lila Paysage à Chessy-les-Mines et dans le Beaujolais.',
+  alternates: { canonical: '/services/' },
 }
 
 const families = (['creation', 'entretien', 'maconnerie'] as const).map((f) => ({

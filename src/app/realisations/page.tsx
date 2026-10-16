@@ -5,6 +5,7 @@ import { PageHeader } from '@/components/ui/PageHeader'
 export const metadata: Metadata = {
   title: 'Réalisations',
   description: 'Jardins, pelouses, massifs, allées et dallages réalisés par Lila Paysage à Chessy-les-Mines et dans le Beaujolais.',
+  alternates: { canonical: '/realisations/' },
 }
 
 export default function RealisationsPage() {

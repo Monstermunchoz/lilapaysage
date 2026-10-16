@@ -7,6 +7,7 @@ import { IconPhone, IconCheck } from '@/components/ui/Icons'
 export const metadata: Metadata = {
   title: 'Demander un devis',
   description: 'Décrivez votre projet de jardin à Lila Paysage : création, entretien, maçonnerie paysagère. Devis gratuit à Chessy-les-Mines, dans le Beaujolais et l\'Ouest lyonnais.',
+  alternates: { canonical: '/devis/' },
 }
 
 export default function DevisPage() {

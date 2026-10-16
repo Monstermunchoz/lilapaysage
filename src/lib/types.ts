@@ -185,6 +185,7 @@ export interface QuoteFormResult {
 export interface SiteConfig {
   demoMode: boolean
   siteUrl: string
+  indexable: boolean
   recipientEmail: string
   fromEmail: string
 }
